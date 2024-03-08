@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-var arrayScrollView = ["Все", "analytics", "android", "back_office", "backend", "design"]
+var arrayScrollView = ["Все", "Аналитика", "Android", "Бэк-офис", "Backend"]
 var personArray = [(Item, UIImage)]()
 var isLoad = false
 var imageArray = [UIImage]()
@@ -47,6 +47,11 @@ class ViewController: UIViewController {
         self.view = mainView
         refreshCollection()
         mainView?.refreshButton?.addTarget(self, action: #selector(refreshPage), for: .touchUpInside)
+        mainView?.rightTextFieldButton?.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
+    }
+    
+    @objc func showFilter() {
+        present(ModalStackViewController(), animated: true)
     }
     
     @objc func refreshPage() {

@@ -18,6 +18,7 @@
 		15001CCC2B987C6C00F57264 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001CCB2B987C6C00F57264 /* Skeleton.swift */; };
 		15001CD02B98C40800F57264 /* PersonsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001CCF2B98C40800F57264 /* PersonsCollectionView.swift */; };
 		15001CD22B98F04400F57264 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001CD12B98F04400F57264 /* Model.swift */; };
+		15001CD72B9B42AE00F57264 /* ModalStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001CD62B9B42AE00F57264 /* ModalStackViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		15001CCB2B987C6C00F57264 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		15001CCF2B98C40800F57264 /* PersonsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsCollectionView.swift; sourceTree = "<group>"; };
 		15001CD12B98F04400F57264 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		15001CD62B9B42AE00F57264 /* ModalStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalStackViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		15001CC62B98784A00F57264 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				15001CD32B9B3F9800F57264 /* View2.0.0 */,
 				15001CCA2B987C3E00F57264 /* View1.0.0 */,
 				15001CAF2B98749800F57264 /* Assets.xcassets */,
 				15001CB12B98749800F57264 /* LaunchScreen.storyboard */,
@@ -110,6 +113,14 @@
 				15001CCF2B98C40800F57264 /* PersonsCollectionView.swift */,
 			);
 			path = View1.0.0;
+			sourceTree = "<group>";
+		};
+		15001CD32B9B3F9800F57264 /* View2.0.0 */ = {
+			isa = PBXGroup;
+			children = (
+				15001CD62B9B42AE00F57264 /* ModalStackViewController.swift */,
+			);
+			path = View2.0.0;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +204,7 @@
 				15001CD22B98F04400F57264 /* Model.swift in Sources */,
 				15001CAB2B98749500F57264 /* ViewController.swift in Sources */,
 				15001CD02B98C40800F57264 /* PersonsCollectionView.swift in Sources */,
+				15001CD72B9B42AE00F57264 /* ModalStackViewController.swift in Sources */,
 				15001CCC2B987C6C00F57264 /* Skeleton.swift in Sources */,
 				15001CA72B98749500F57264 /* AppDelegate.swift in Sources */,
 				15001CC92B98796A00F57264 /* NavigationControllerViewController.swift in Sources */,
