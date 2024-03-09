@@ -21,8 +21,6 @@ class PersonsCollectionView: UICollectionView {
         dataSource = self
         showsVerticalScrollIndicator = false
         self.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "1")
-
-        
     }
     
     required init?(coder: NSCoder) {
@@ -51,6 +49,7 @@ extension PersonsCollectionView: UICollectionViewDelegate, UICollectionViewDataS
         var lastFirstNameLabel: UILabel?
         var specLabel: UILabel?
         var dopLabel: UILabel?
+        var dateLabel: UILabel?
         
         //MARK: -No load
         let botImageView: UIView = {
@@ -98,12 +97,13 @@ extension PersonsCollectionView: UICollectionViewDelegate, UICollectionViewDataS
         
         //MARK: -Load
         
-        
+       
         
         
         print(personArray.count)
         if isLoad == true {
-            
+            print(sortedBy)
+            print(isLoad)
             imageView = {
                 let image = personArray[indexPath.row].1
                 let imageView = UIImageView(image: image)
@@ -158,6 +158,27 @@ extension PersonsCollectionView: UICollectionViewDelegate, UICollectionViewDataS
                 make.left.equalTo((lastFirstNameLabel?.snp.right)!).inset(-5)
             })
             
+            dateLabel = {
+                let label = UILabel()
+                label.text = personArray[indexPath.row].0.birthday
+                label.font = .systemFont(ofSize: 15, weight: .regular)
+                label.textColor = UIColor(red: 85/255, green: 85/255, blue: 92/255, alpha: 1)
+                label.alpha = 0
+                return label
+            }()
+            cell.addSubview(dateLabel ?? UILabel())
+            dateLabel?.snp.makeConstraints({ make in
+                make.top.equalTo((dopLabel?.snp.centerY)!).offset(-5)
+                make.right.equalToSuperview().inset(3)
+            })
+            
+            if sortedBy == "Day" {
+                UIView.animate(withDuration: 0.3) {
+                    dateLabel?.alpha = 1
+                    
+                }
+            }
+            
             
             
             
@@ -169,6 +190,7 @@ extension PersonsCollectionView: UICollectionViewDelegate, UICollectionViewDataS
                 imageView?.alpha = 1
                 lastFirstNameLabel?.alpha = 1
                 specLabel?.alpha = 1
+                
                 
             }
             
@@ -182,6 +204,7 @@ extension PersonsCollectionView: UICollectionViewDelegate, UICollectionViewDataS
                 imageView?.alpha = 0
                 lastFirstNameLabel?.alpha = 0
                 specLabel?.alpha = 0
+                dateLabel?.alpha = 0
                 
             }
         }

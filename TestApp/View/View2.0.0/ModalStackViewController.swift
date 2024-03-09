@@ -7,16 +7,36 @@
 
 import UIKit
 
+var sortedBy = " "
+
 class ModalStackViewController: UIViewController {
     
     var alfButton, birthdayButton: UIButton?
     var alfButtonView, birthdayButtonView: UIView?
+    var viewController: ViewController?
+
+
+    
+    
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         settingsView()
         settingsClickButtons()
+        
+        if sortedBy == "Alf" {
+            alfButtonView?.layer.borderWidth = 6
+            birthdayButtonView?.layer.borderWidth = 2
+        } 
+        if sortedBy == "Day" {
+            birthdayButtonView?.layer.borderWidth = 6
+            alfButtonView?.layer.borderWidth = 2
+        }
+        
     }
     
     func settingsView() {
@@ -108,18 +128,45 @@ class ModalStackViewController: UIViewController {
         birthdayButton?.addTarget(self, action: #selector(clickerdButton(_:)), for: .touchUpInside)
     }
     
+    
+    
+    
+    
+    deinit {
+        
+        isLoad = false
+        viewController?.mainView?.collectionView?.reloadData()
+        if let viewController = self.viewController {
+            DispatchQueue.main.asyncAfter(deadline: .now() ) {
+                viewController.loadData()
+            }
+            
+        }
+    }
+
+
+
+    
     @objc func clickerdButton(_ sender: UIButton) {
         if sender == alfButton {
+            sortedBy = "Alf"
             UIView.animate(withDuration: 0.15) {
                 self.alfButtonView?.layer.borderWidth = 6
                 self.birthdayButtonView?.layer.borderWidth = 2
+                
             }
+            
         } else {
+            sortedBy = "Day"
             UIView.animate(withDuration: 0.15) {
                 self.birthdayButtonView?.layer.borderWidth = 6
                 self.alfButtonView?.layer.borderWidth = 2
             }
         }
+        isLoad = false
+        viewController?.mainView?.rightTextFieldButton?.imageView?.tintColor = UIColor(red: 101/255, green: 52/255, blue: 255/255, alpha: 1)
+        
+        
     }
     
 }

@@ -17,7 +17,7 @@ struct Item: Codable {
     let id: String
     let avatarURL: String
     let firstName, lastName, userTag, department: String
-    let position, birthday, phone: String
+    var position, birthday, phone: String
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -42,4 +42,19 @@ enum DepartamentComponent: String {
     case analytics = "Аналитика"
 }
 
+
+let departmentMappings: [String: DepartamentComponent] = [
+    "analytics": .analytics,
+    "android": .android,
+    "back_office": .back_office,
+    "backend": .backend,
+    "design": .design,
+    "frontend": .frontend,
+    "hr": .hr,
+    "ios": .ios,
+    "management": .management,
+    "pr": .pr,
+    "qa": .qa,
+    "support": .support
+]
 

@@ -49,10 +49,14 @@ class Skeleton: UIView {
         
         rightTextFieldButton = {
             let button = UIButton()
-            button.setImage(UIImage(named: "rightText"), for: .normal)
-            button.tintColor = UIColor(red: 195/255, green: 195/255, blue: 198/255, alpha: 1)
+            if let image = UIImage(named: "rightText") {
+                let redImage = image.withRenderingMode(.alwaysTemplate)
+                button.setImage(redImage, for: .normal)
+                button.tintColor = UIColor(red: 195/255, green: 195/255, blue: 198/255, alpha: 1)
+            }
             return button
         }()
+
         
         searchTextField = {
             let field = UITextField()
