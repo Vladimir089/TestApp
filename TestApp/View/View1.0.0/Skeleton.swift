@@ -8,13 +8,14 @@
 import UIKit
 import SnapKit
 
+var selectedButton: UIButton?
+
 class Skeleton: UIView {
     
+    var viewController: ViewController?
     var errorView: UIView?
-    var selectedButton: UIButton?
     var collectionView: PersonsCollectionView?
     var refreshButton: UIButton?
-    
     var searchTextField: UITextField?
     var leftTextFieldButton, rightTextFieldButton: UIButton?
     var specScrollView: UIScrollView?
@@ -56,7 +57,6 @@ class Skeleton: UIView {
             }
             return button
         }()
-
         
         searchTextField = {
             let field = UITextField()
@@ -69,7 +69,6 @@ class Skeleton: UIView {
             let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
             let rightContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
             
-            // Добавляем leftView и rightView в контейнеры
             leftContainerView.addSubview(leftTextFieldButton!)
             rightContainerView.addSubview(rightTextFieldButton!)
             
@@ -77,12 +76,13 @@ class Skeleton: UIView {
             leftTextFieldButton?.snp.makeConstraints { make in
                 make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: inset, bottom: 0, right: 8))
             }
+            
             rightTextFieldButton?.snp.makeConstraints { make in
                 make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: inset))
             }
+            
             field.leftView = leftContainerView
             field.rightView = rightContainerView
-            
             field.rightViewMode = .always
             field.leftViewMode = .always
             return field
@@ -101,6 +101,7 @@ class Skeleton: UIView {
             view.backgroundColor = .systemGray6
             return view
         }()
+        
         view.addSubview(separatorView)
         separatorView.snp.makeConstraints { make in
             make.height.equalTo(1)
@@ -108,22 +109,19 @@ class Skeleton: UIView {
             make.bottom.equalToSuperview()
         }
         
-        
         specScrollView = {
             let scroll = UIScrollView()
             scroll.isScrollEnabled = true
-            scroll.delegate = self
             scroll.showsHorizontalScrollIndicator = false
             return scroll
         }()
+        
         view.addSubview(specScrollView ?? UIScrollView())
         specScrollView?.snp.makeConstraints({ make in
             make.left.right.equalToSuperview()
-            
             make.bottom.equalTo(separatorView.snp.bottom)
             make.top.equalTo((searchTextField?.snp.bottom)!).inset(-5)
         })
-        
         
         collectionView = PersonsCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         addSubview(collectionView ?? UIView())
@@ -131,7 +129,7 @@ class Skeleton: UIView {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(view.snp.bottom)
         })
-
+        
         //MARK: -Error view
         
         errorView = {
@@ -141,6 +139,7 @@ class Skeleton: UIView {
             view.alpha = 0
             return view
         }()
+        
         addSubview(errorView ?? UIView())
         errorView?.snp.makeConstraints({ make in
             make.height.width.top.left.right.bottom.equalToSuperview()
@@ -151,6 +150,7 @@ class Skeleton: UIView {
             let imageView = UIImageView(image: image)
             return imageView
         }()
+        
         errorView?.addSubview(errorImageView)
         errorImageView.snp.makeConstraints { make in
             make.height.width.equalTo(56)
@@ -163,6 +163,7 @@ class Skeleton: UIView {
             label.font = .systemFont(ofSize: 17, weight: .medium)
             return label
         }()
+        
         errorView?.addSubview(errorOneLabel)
         errorOneLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -176,6 +177,7 @@ class Skeleton: UIView {
             label.textColor = UIColor(red: 151/255, green: 151/255, blue: 155/255, alpha: 1)
             return label
         }()
+        
         errorView?.addSubview(errorTwoLabel)
         errorTwoLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -189,6 +191,7 @@ class Skeleton: UIView {
             button.tintColor = UIColor(red: 101/255, green: 52/255, blue: 255/255, alpha: 1)
             return button
         }()
+        
         errorView?.addSubview(refreshButton ?? UIButton())
         refreshButton?.snp.makeConstraints({ make in
             make.width.equalTo(343)
@@ -198,10 +201,8 @@ class Skeleton: UIView {
         })
     }
     
-    
-    
     func fillScrollView() {
-        // Создаем кнопки на основе элементов массива и добавляем их в specScrollView
+
         var previousButton: UIButton?
         for (index, item) in arrayScrollView.enumerated() {
             let button = UIButton()
@@ -210,10 +211,9 @@ class Skeleton: UIView {
             button.titleLabel?.font = .systemFont(ofSize: 17, weight: .medium)
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             specScrollView?.addSubview(button)
+            
             button.snp.makeConstraints { make in
                 make.top.bottom.equalToSuperview()
-                
-                
                 if let previousButton = previousButton {
                     make.left.equalTo(previousButton.snp.right).inset(-20)
                 } else {
@@ -223,60 +223,27 @@ class Skeleton: UIView {
                     make.right.equalToSuperview().inset(16)
                 }
             }
-            
             previousButton = button
         }
         
-        // Автоматически выберем первый элемент при инициализации
         if let firstButton = specScrollView?.subviews.first as? UIButton {
-            selectButton(firstButton)
+            if let viewController = viewController {
+                viewController.selectButton(firstButton)
+            }
         }
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
-            selectButton(sender)
+        if let viewController = viewController {
+            viewController.selectButton(sender)
         }
-    
-    private func selectButton(_ button: UIButton) {
-        // Удаляем подчеркивание с предыдущей кнопки, если оно существует
-        selectedButton?.subviews.forEach {
-            if $0.tag == 999 {
-                $0.removeFromSuperview()
-                
-            }
-        }
-        selectedButton?.setTitleColor(.systemGray3, for: .normal)
-        
-        // Перемещаем подчеркивание к выбранной кнопке
-        let underlineView = UIView()
-        underlineView.backgroundColor = .blue
-        underlineView.tag = 999
-        button.addSubview(underlineView)
-        button.setTitleColor(.black, for: .normal)
-        
-        underlineView.snp.makeConstraints { make in
-            make.height.equalTo(2)
-            make.bottom.equalTo(button.snp.bottom)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(button.titleLabel?.intrinsicContentSize.width ?? 0)
-        }
-        
-        // Обновляем текущую выбранную кнопку
-        selectedButton = button
     }
 
-
+    
     func reloadScrollView() {
-        // Очищаем предыдущие представления внутри specScrollView
         specScrollView?.subviews.forEach { $0.removeFromSuperview() }
-
-        // Заполняем specScrollView с новыми данными
         fillScrollView()
     }
-
-    
-    
-    
 }
 
 
@@ -286,6 +253,3 @@ extension Skeleton: UITextFieldDelegate {
     }
 }
 
-extension Skeleton: UIScrollViewDelegate {
-    
-}

@@ -16,7 +16,7 @@ struct Person: Codable {
 struct Item: Codable {
     let id: String
     let avatarURL: String
-    let firstName, lastName, userTag, department: String
+    var firstName, lastName, userTag, department: String
     var position, birthday, phone: String
 
     enum CodingKeys: String, CodingKey {
@@ -25,7 +25,6 @@ struct Item: Codable {
         case firstName, lastName, userTag, department, position, birthday, phone
     }
 }
-
 
 enum DepartamentComponent: String {
     case android = "Android"
@@ -41,7 +40,6 @@ enum DepartamentComponent: String {
     case support = "Техподдержка"
     case analytics = "Аналитика"
 }
-
 
 let departmentMappings: [String: DepartamentComponent] = [
     "analytics": .analytics,
