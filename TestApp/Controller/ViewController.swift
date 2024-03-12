@@ -11,6 +11,7 @@ import Alamofire
 var arrayScrollView = ["Все", "Аналитика", "Android", "Бэк-офис", "Backend"]
 var personArray = [(Item, UIImage)]()
 var copyPersonArray = [(Item, UIImage)]()
+var copyTwoPersonArray = [(Item, UIImage)]()
 var isLoad = false
 var imageArray = [UIImage]()
 
@@ -41,6 +42,22 @@ class ViewController: UIViewController {
         mainView?.refreshButton?.addTarget(self, action: #selector(refreshPage), for: .touchUpInside)
         mainView?.rightTextFieldButton?.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
         mainView?.viewController = self
+        mainView?.closeTextFieldButton?.addTarget(self, action: #selector(clearTextField), for: .touchUpInside)
+        mainView?.clearTextFieldButton?.addTarget(self, action: #selector(closeTextField), for: .touchUpInside)
+        
+    }
+    
+    @objc func closeTextField() {
+        mainView?.textFieldShouldReturn(mainView?.searchTextField ?? UITextField())
+        
+        
+    }
+    
+    @objc func clearTextField() {
+        mainView?.closeTextFieldButton?.alpha = 0
+        personArray = copyTwoPersonArray
+        mainView?.collectionView?.reloadData()
+        mainView?.searchTextField?.text = nil
     }
     
     @objc func showFilter() {
@@ -74,9 +91,11 @@ class ViewController: UIViewController {
         selectedButton = button
         if selectedButton?.titleLabel?.text == "Все" {
             personArray = copyPersonArray 
+            copyTwoPersonArray = copyPersonArray
             print(personArray.count)
         } else {
             personArray = copyPersonArray.filter { $0.0.department == selectedButton?.titleLabel?.text }
+            copyTwoPersonArray = personArray
         }
         mainView?.collectionView?.reloadData()
     }
@@ -168,6 +187,7 @@ class ViewController: UIViewController {
                         personArray.sort { (firstPerson, secondPerson) -> Bool in
                             return firstPerson.0.firstName < secondPerson.0.firstName
                         }
+                        
                     }
                     
                     let dateFormatterForDisplay: DateFormatter = {
@@ -209,6 +229,7 @@ class ViewController: UIViewController {
                             }
                             semaphore.signal()
                         }
+                        
                     }
                     
                     for index in 0..<personArray.count {
@@ -219,6 +240,7 @@ class ViewController: UIViewController {
                     }
                     
                     copyPersonArray = personArray
+                    copyTwoPersonArray = personArray
                     isLoad = true
                     self.mainView?.collectionView?.reloadData()
                 case .failure(_):
