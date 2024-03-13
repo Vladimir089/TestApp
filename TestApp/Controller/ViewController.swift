@@ -7,7 +7,7 @@
 
 import UIKit
 import Alamofire
-
+var start = 0
 var arrayScrollView = ["Все", "Аналитика", "Android", "Бэк-офис", "Backend"]
 var personArray = [(Item, UIImage)]()
 var copyPersonArray = [(Item, UIImage)]()
@@ -17,40 +17,60 @@ var imageArray = [UIImage]()
 
 class ViewController: UIViewController {
     
+    var profileView: ProfileViewController?
+    let semaphore = DispatchSemaphore(value: 1)
+    var mainView: Skeleton?
+    let activityIndicatorView = UIActivityIndicatorView(style: .medium)
+    
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }
     
-    let semaphore = DispatchSemaphore(value: 1)
-    
-    var mainView: Skeleton?
-    let activityIndicatorView = UIActivityIndicatorView(style: .medium)
+  
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
         loadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mainView = Skeleton()
+        
         self.view = mainView
         refreshCollection()
+        mainView?.collectionView?.viewController = self
         mainView?.refreshButton?.addTarget(self, action: #selector(refreshPage), for: .touchUpInside)
         mainView?.rightTextFieldButton?.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
         mainView?.viewController = self
         mainView?.closeTextFieldButton?.addTarget(self, action: #selector(clearTextField), for: .touchUpInside)
         mainView?.clearTextFieldButton?.addTarget(self, action: #selector(closeTextField), for: .touchUpInside)
+       // profileView = ProfileViewController()
         
+    }
+    
+    func nextPage(number: Int) {
+        if isLoad == true {
+            profileView = ProfileViewController()
+            let person = personArray[number].0
+            let image = personArray[number].1
+            profileView!.profileImage = image
+            profileView!.firstName = person.firstName
+            profileView!.lastName = person.lastName
+            profileView!.userTag = person.userTag
+            profileView!.otdel = person.department
+            profileView!.phone = person.phone
+            profileView!.dateBirthday = person.birthday
+            navigationController?.pushViewController(profileView!, animated: true)
+        }
     }
     
     @objc func closeTextField() {
         mainView?.textFieldShouldReturn(mainView?.searchTextField ?? UITextField())
-        
-        
     }
     
     @objc func clearTextField() {

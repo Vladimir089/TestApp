@@ -365,31 +365,22 @@ extension Skeleton: UITextFieldDelegate {
                 }
                  
                 
-            
-                
-                sortCopyPersonArrayByTextFieldText()
+                personArray = filterPersons(by: textField.text ?? "1")
+                viewController?.mainView?.collectionView?.reloadData()
+
                 return true
             }
             return false
         }
     
-    
-    func sortCopyPersonArrayByTextFieldText() {
-        guard let searchText = searchTextField?.text?.lowercased() else { return }
-
-        // Отсортировать массив по пользовательскому условию
-        personArray.sort { (left, _) -> Bool in
-            // Получить данные Item из left
-            let item = left.0
-            // Создать массив всех строковых полей Item
+    func filterPersons(by searchText: String) -> [(Item, UIImage)] {
+        let filteredPersons = copyTwoPersonArray.filter { (item, _) in
             let itemStrings = [item.firstName, item.userTag, item.phone]
-            // Преобразовать все строки в нижний регистр и проверить, содержится ли в них searchText
-            let containsSearchText = itemStrings.map { $0.lowercased() }.contains { $0.contains(searchText) }
-            // Вернуть результат сравнения
-            return containsSearchText
+            return itemStrings.contains { $0.lowercased().contains(searchText.lowercased()) }
         }
-
-        viewController?.mainView?.collectionView?.reloadData()
+        return filteredPersons
     }
+    
+
 }
 

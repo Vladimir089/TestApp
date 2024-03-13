@@ -9,17 +9,22 @@ import UIKit
 
 class PersonsCollectionView: UICollectionView {
     
+    var viewController: ViewController?
+    
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super .init(frame: frame, collectionViewLayout: layout)
         delegate = self
         dataSource = self
         showsVerticalScrollIndicator = false
         self.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "1")
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
 }
 
 extension PersonsCollectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -199,6 +204,10 @@ extension PersonsCollectionView: UICollectionViewDelegate, UICollectionViewDataS
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewController?.nextPage(number: indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

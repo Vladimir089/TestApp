@@ -19,6 +19,7 @@
 		15001CD02B98C40800F57264 /* PersonsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001CCF2B98C40800F57264 /* PersonsCollectionView.swift */; };
 		15001CD22B98F04400F57264 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001CD12B98F04400F57264 /* Model.swift */; };
 		15001CD72B9B42AE00F57264 /* ModalStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001CD62B9B42AE00F57264 /* ModalStackViewController.swift */; };
+		15C218F22BA0E1B200B0F756 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C218F12BA0E1B200B0F756 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		15001CCF2B98C40800F57264 /* PersonsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsCollectionView.swift; sourceTree = "<group>"; };
 		15001CD12B98F04400F57264 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		15001CD62B9B42AE00F57264 /* ModalStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalStackViewController.swift; sourceTree = "<group>"; };
+		15C218F12BA0E1B200B0F756 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				15001CA82B98749500F57264 /* SceneDelegate.swift */,
 				15001CA62B98749500F57264 /* AppDelegate.swift */,
 				15001CD12B98F04400F57264 /* Model.swift */,
+				15C218F12BA0E1B200B0F756 /* ProfileViewController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				15001CD72B9B42AE00F57264 /* ModalStackViewController.swift in Sources */,
 				15001CCC2B987C6C00F57264 /* Skeleton.swift in Sources */,
 				15001CA72B98749500F57264 /* AppDelegate.swift in Sources */,
+				15C218F22BA0E1B200B0F756 /* ProfileViewController.swift in Sources */,
 				15001CC92B98796A00F57264 /* NavigationControllerViewController.swift in Sources */,
 				15001CA92B98749500F57264 /* SceneDelegate.swift in Sources */,
 			);
